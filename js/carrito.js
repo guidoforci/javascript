@@ -12,8 +12,26 @@ let vaciarCarrito = document.getElementById("vaciarCarrito")
 let finalizarCompra = document.getElementById("finalizarCompra");
 
 
-function renderCarrito () {
+/*function renderCarrito () {
     carrito.forEach (carrito => {document.getElementById("tablabody").innerHTML += `
+    <tr>
+        <td style="color: aliceblue;">${carrito.codigo}</td>
+        <td style="color: aliceblue;">${carrito.nombre}</td>
+        <td style="color: aliceblue;">${carrito.precio}</td>
+        <td style="color: aliceblue;">${carrito.cantidad}</td>
+        <td style="color: aliceblue;"><i id="deleteProduct" class="fa-regular fa-trash-can"></i></td>;
+    </tr>
+    `; 
+})
+}
+*/
+
+
+function renderCarrito () {
+    let tablabody=document.getElementById('tablabody')
+    tablabody.innerHTML=''
+    carrito.forEach (carrito => {
+        tablabody.innerHTML += `
     <tr>
         <td style="color: aliceblue;">${carrito.codigo}</td>
         <td style="color: aliceblue;">${carrito.nombre}</td>
@@ -23,6 +41,8 @@ function renderCarrito () {
     </tr>
     `;})
     };
+
+    
 
     //RECORRIDO DE LAS CARDS 
 function renderProds() {
@@ -42,6 +62,8 @@ function renderProds() {
 //EVENTO Click para comprar el producto.
     productos.forEach(producto => {
         document.getElementById(`btn${producto.codigo}`).addEventListener("click",function(){agregarAlCarrito(producto);});})
+
+    
     };
 
 renderProds ();    
@@ -49,8 +71,8 @@ renderProds ();
 function agregarAlCarrito(producto){
     let repeat = carrito.some ((sumarCant) => sumarCant.codigo === producto.codigo)
     
-    if (repeat === true) {
-        carrito.map ((prod) => {
+    if (repeat) {
+        carrito.forEach ((prod) => {
             if (prod.codigo === producto.codigo) {
                 prod.cantidad++;
             }
@@ -64,7 +86,7 @@ function agregarAlCarrito(producto){
     <td style="color: aliceblue;">${producto.nombre}</td>
     <td style="color: aliceblue;">${producto.precio}</td>
     <td style="color: aliceblue;">${producto.cantidad}</td>
-    <td style="color: aliceblue;"><i class="fa-regular fa-trash-can"></i></td>
+    <td style="color: aliceblue;"><i id= "deleteProduct" class="fa-regular fa-trash-can"></i></td>
 </tr>
 `;
 }
@@ -87,14 +109,41 @@ function agregarAlCarrito(producto){
     Total.innerText="Total a pagar: $"+totalCarrito+"\n"+"\n"+"Gracias por tu compra."+"\n"+"Te esperamos por el local para retirar tu pedido!";
 
     localStorage.setItem ("Mis compras", JSON.stringify (carrito));
+
+    renderCarrito ();
     }
 
-renderCarrito ();
+    renderCarrito ();
 totalCarrito = carrito.reduce((acumulador,producto)=> acumulador + producto.precio * producto.cantidad,0);
     let Total = document.getElementById("total");
     Total.innerText="Total a pagar: $"+totalCarrito+"\n"+"\n"+"Gracias por tu compra."+"\n"+"Te esperamos por el local para retirar tu pedido!";
 
     localStorage.setItem ("Mis compras", JSON.stringify (carrito));
+
+
+
+//ELIMINAR 
+/*
+const eliminarProducto = () => {
+    console.log ("funciona")
+    const foundId = carrito.find ((element) => element.codigo);
+
+    carrito = carrito.filter ((carritoCodigo) => {
+        return carritoCodigo !== foundId 
+    }); 
+
+    renderProds ();
+    renderCarrito ();
+    
+}
+
+
+document.getElementById ("deleteProduct").addEventListener ("click", eliminarProducto)
+*/
+
+
+
+
 
 
 //BOTON VACIAR CARRITO PREGUNTAR PORQUÉ NO FUNCIONA. 

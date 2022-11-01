@@ -12,21 +12,6 @@ let vaciarCarrito = document.getElementById("vaciarCarrito")
 let finalizarCompra = document.getElementById("finalizarCompra");
 
 
-/*function renderCarrito () {
-    carrito.forEach (carrito => {document.getElementById("tablabody").innerHTML += `
-    <tr>
-        <td style="color: aliceblue;">${carrito.codigo}</td>
-        <td style="color: aliceblue;">${carrito.nombre}</td>
-        <td style="color: aliceblue;">${carrito.precio}</td>
-        <td style="color: aliceblue;">${carrito.cantidad}</td>
-        <td style="color: aliceblue;"><i id="deleteProduct" class="fa-regular fa-trash-can"></i></td>;
-    </tr>
-    `; 
-})
-}
-*/
-
-
 function renderCarrito () {
     let tablabody=document.getElementById('tablabody')
     tablabody.innerHTML=''
@@ -89,6 +74,8 @@ function agregarAlCarrito(producto){
     <td style="color: aliceblue;"><i id= "deleteProduct" class="fa-regular fa-trash-can"></i></td>
 </tr>
 `;
+
+document.getElementById ("deleteProduct").addEventListener ("click", eliminarProducto)
 }
 
     //Alert
@@ -122,7 +109,109 @@ totalCarrito = carrito.reduce((acumulador,producto)=> acumulador + producto.prec
 
 
 
-//ELIMINAR 
+//ELIMINAR PRODUCTO DE A UNO. 
+const eliminarProducto = (codigo) => {
+    let borrar = carrito.find((producto) => producto.codigo === codigo)
+    let indice = carrito.indexOf(borrar)
+    carrito.splice(indice, 1)
+    renderCarrito()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*function renderCarrito () {
+    carrito.forEach (carrito => {document.getElementById("tablabody").innerHTML += `
+    <tr>
+        <td style="color: aliceblue;">${carrito.codigo}</td>
+        <td style="color: aliceblue;">${carrito.nombre}</td>
+        <td style="color: aliceblue;">${carrito.precio}</td>
+        <td style="color: aliceblue;">${carrito.cantidad}</td>
+        <td style="color: aliceblue;"><i id="deleteProduct" class="fa-regular fa-trash-can"></i></td>;
+    </tr>
+    `; 
+})
+}
+*/
+
+
 /*
 const eliminarProducto = () => {
     console.log ("funciona")
@@ -136,10 +225,37 @@ const eliminarProducto = () => {
     renderCarrito ();
     
 }
-
-
-document.getElementById ("deleteProduct").addEventListener ("click", eliminarProducto)
 */
+
+
+
+
+
+
+
+
+
+/*
+//BOTON FINALIZAR COMPRA
+finalizarCompra.addEventListener ("click", () => {
+    carrito = [];
+    document.getElementById("tablabody").innerHTML= "";
+    let Total = document.getElementById("total");
+    Total.innerText="Total a pagar: $";
+
+    Toastify({
+        text: "Compra Finalizada!"+"\n"+"A la brevedad recibirás un Email con el detalle.",
+        duration: 3000,
+        style: {background: "black",},
+        }).showToast();
+});
+
+
+
+
+
+
+
 
 
 
@@ -159,19 +275,6 @@ vaciarCarrito.addEventListener ("click", () => {
   
 
 
-//BOTON FINALIZAR COMPRA
-finalizarCompra.addEventListener ("click", () => {
-    carrito = [];
-    document.getElementById("tablabody").innerHTML= "";
-    let Total = document.getElementById("total");
-    Total.innerText="Total a pagar: $";
-
-    Toastify({
-        text: "Compra Finalizada!"+"\n"+"A la brevedad recibirás un Email con el detalle.",
-        duration: 3000,
-        style: {background: "black",},
-        }).showToast();
-});
 
 
 

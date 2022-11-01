@@ -18,12 +18,16 @@ const eliminarProducto = (codigo) => {
     let indice = carrito.indexOf(borrar)
     carrito.splice(indice, 1)
     renderCarrito()
-
     localStorage.setItem("Mis compras", JSON.stringify(carrito));
+    totalizar (); 
+}
+
+//FUNCIÓN PARA CALCULAR TOTALES
+function totalizar () {
     totalCarrito = carrito.reduce((acumulador, producto) => acumulador + producto.precio * producto.cantidad, 0);
     let Total = document.getElementById("total");
-    Total.innerText = "Total a pagar: $" + totalCarrito;
-}
+    Total.innerText = "Total a pagar: $" + totalCarrito;}
+
 
 //RECORRIDO DE LAS CARDS 
 function renderProds() {
@@ -91,17 +95,14 @@ function agregarAlCarrito(producto) {
     localStorage.setItem("Mis compras", JSON.stringify(carrito));
 
     //TOTALIZAR COMPRA 
-    totalCarrito = carrito.reduce((acumulador, producto) => acumulador + producto.precio * producto.cantidad, 0);
-    let Total = document.getElementById("total");
-    Total.innerText = "Total a pagar: $" + totalCarrito + "\n" + "\n" + "Gracias por tu compra." + "\n" + "Te esperamos por el local para retirar tu pedido!";
+    totalizar (); 
+    document.getElementById("total").innerText= "Total a pagar: $" + totalCarrito+"\n"+"\n"+"Gracias por tu compra." + "\n" + "Te esperamos por el local para retirar tu pedido!";
     localStorage.setItem("Mis compras", JSON.stringify(carrito));
     renderCarrito();
 }
 
 renderCarrito();
-totalCarrito = carrito.reduce((acumulador, producto) => acumulador + producto.precio * producto.cantidad, 0);
-let Total = document.getElementById("total");
-Total.innerText = "Total a pagar: $" + totalCarrito;
+totalizar (); 
 
 
 //BOTON VACIAR CARRITO
@@ -109,9 +110,7 @@ vaciarCarrito.addEventListener("click", () => {
     carrito.splice(0, carrito.length);
     renderCarrito();
     localStorage.setItem("Mis compras", JSON.stringify(carrito));
-    totalCarrito = carrito.reduce((acumulador, producto) => acumulador + producto.precio * producto.cantidad, 0);
-    let Total = document.getElementById("total");
-    Total.innerText = "Total a pagar: $" + totalCarrito;
+    totalizar (); 
 }
 );
 
@@ -119,8 +118,7 @@ vaciarCarrito.addEventListener("click", () => {
 finalizarCompra.addEventListener("click", () => {
     carrito = [];
     document.getElementById("tablabody").innerHTML = "";
-    let Total = document.getElementById("total");
-    Total.innerText = "Total a pagar: $";
+    
 
     Toastify({
         text: "Compra Finalizada!" + "\n" + "A la brevedad recibirás un Email con el detalle.",
@@ -128,3 +126,5 @@ finalizarCompra.addEventListener("click", () => {
         style: { background: "black", },
     }).showToast();
 });
+
+

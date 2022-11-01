@@ -13,9 +13,8 @@ let finalizarCompra = document.getElementById("finalizarCompra");
 
 
 //ELIMINAR PRODUCTO
-
 const eliminarProducto = (codigo) => {
-    let borrar = carrito.find((producto) => producto.codigo === codigo)
+    let borrar = carrito.find((producto) => producto.codigo === codigo);
     let indice = carrito.indexOf(borrar)
     carrito.splice(indice, 1)
     renderCarrito()
@@ -43,7 +42,7 @@ function renderProds() {
     }
     //EVENTO Click para comprar el producto.
     productos.forEach(producto => {
-        document.getElementById(`btn${producto.codigo}`).addEventListener("click", function () { agregarAlCarrito(producto); });
+        document.getElementById(`btn${producto.codigo}`).addEventListener("click", function () {agregarAlCarrito(producto); });
     })
 };
 renderProds();
@@ -59,14 +58,12 @@ function renderCarrito() {
             <td style="color: aliceblue;">${carrito.nombre}</td>
             <td style="color: aliceblue;">${carrito.precio}</td>
             <td style="color: aliceblue;">${carrito.cantidad}</td>
-            <td style="color: white;"><i id="delete${carrito.codigo}" class="fa-regular fa-trash-can"></i></td>;
+            <td  onClick = "eliminarProducto(${carrito.codigo})" style="color: white;"><i class="fa-regular fa-trash-can"></i></td>;
         </tr>
         `;
-        //EVENTO Click para eliminar el producto.
-        document.getElementById(`delete${carrito.codigo}`).addEventListener("click", eliminarProducto)
-    })
+    })  
 };
-
+//AGREGAR PRODUCTOS AL CARRITO
 function agregarAlCarrito(producto) {
     let repeat = carrito.some((sumarCant) => sumarCant.codigo === producto.codigo)
 
@@ -131,50 +128,3 @@ finalizarCompra.addEventListener("click", () => {
         style: { background: "black", },
     }).showToast();
 });
-
-
-
-
-
-
-
-
-
-
-
-//OPCION 1
-/*
-const eliminarProducto = (codigo) => {
-    let borrar = carrito.find((producto) => producto.codigo === codigo)
-    let indice = carrito.indexOf(borrar)
-    carrito.splice(indice, 1)
-    renderCarrito()
-}
-*/
-//OPCION 2
-/*
-const eliminarProducto = (e) => {
-    const borrar = carrito.find((producto) => producto.codigo === e.target.codigo);
-    let indice = carrito.indexOf(borrar)
-    carrito.splice(indice, 1)
-    renderCarrito()}
-*/
-
-/*
-const eliminarProducto = (e) => {
-    console.log(e.target.id);
-    carrito = carrito.filter((producto) => {
-        console.log(producto.codigo !== parseInt(e.target.id));
-        return producto.codigo !== parseInt(e.target.id);
-    });
-    console.log(carrito);
-    localStorage.setItem("Mis compras", JSON.stringify(carrito));
-    document.querySelectorAll(".fa-trash-can").forEach((product) => {
-        product.removeEventListener("click", eliminarProducto);
-    });
-    renderCarrito();
-};
-*/
-
-
-

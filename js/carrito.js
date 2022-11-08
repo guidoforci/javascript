@@ -106,47 +106,15 @@ totalizar ();
 
 //función GET de array de productos incorporados con JSON 
 async function GETdatosJSON() {
-    const URLJSON="./array.json";
+    const URLJSON="array.json";
     const respuestaArray = await fetch(URLJSON);
     const tomarDatos = await respuestaArray.json();
     productosJSON = tomarDatos;
-    console.log(URLJSON);
-    //ya tengo el dolar y los productos, renderizo las cartas
+    
+
     renderProds();
 }
 
-
-/*
-function GETdatosJSON() {
-const URLJSON = "./array.json"
-fetch (URLJSON)
-    .then (infosolicitada => infosolicitada.json())
-    .then (productoJSON => console.log (productoJSON))
-
-}
-    GETdatosJSON ();
-*/
-
-
-
-
-
-/*
-function obtenerDolar(){
-    const URLDOLAR="https://api.bluelytics.com.ar/v2/latest";
-    fetch(URLDOLAR)
-        .then( respuesta => respuesta.json())
-        .then( cotizaciones => {
-            const dolarBlue = cotizaciones.blue;
-            console.log(dolarBlue);
-            document.getElementById("fila_prueba").innerHTML+=`
-                <p>Dolar compra: $ ${dolarBlue.value_buy} Dolar venta: $ ${dolarBlue.value_sell}</p>
-            `;
-            dolarCompra=dolarBlue.value_buy;
-            obtenerJSON();
-        })
-}
-*/
 
 //BOTON VACIAR CARRITO
 vaciarCarrito.addEventListener("click", () => {
@@ -177,17 +145,3 @@ finalizarCompra.addEventListener("click", () => {
 }});
 
 
-/*
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'b9777b88b3msh888db381c5bafc4p14462ejsn4e7a92d041a5',
-		'X-RapidAPI-Host': 'billboard2.p.rapidapi.com'
-	}
-};
-
-fetch('https://billboard2.p.rapidapi.com/billboard_global_200?date=2020-09-19', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
-*/

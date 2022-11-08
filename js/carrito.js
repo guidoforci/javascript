@@ -1,10 +1,10 @@
-console.log(productos); // PRODUCTOS AGREGADOS EN arraydeproductos.js 
 
 //PRODUCTOS GUARDADOS EN EL LOCAL STORAGE
 const PasarProductosAJson = JSON.stringify(productos);
 localStorage.setItem("Listado de Productos", PasarProductosAJson);
 
 // VARIABLES 
+let productosJSON=[];
 let carrito = JSON.parse(localStorage.getItem("Mis compras")) || [];
 let totalCarrito;
 let contenedor = document.getElementById("divCarritoJS");
@@ -31,7 +31,7 @@ function totalizar () {
 
 //RECORRIDO DE LAS CARDS 
 function renderProds() {
-    for (const producto of productos) {
+    for (const producto of productosJSON) {
         contenedor.innerHTML += `
                             <div class="col">
                                 <div class="card " style="margin: 0 auto;">
@@ -45,11 +45,10 @@ function renderProds() {
             `;
     }
     //EVENTO Click para comprar el producto.
-    productos.forEach(producto => {
+    productosJSON.forEach(producto => {
         document.getElementById(`btn${producto.codigo}`).addEventListener("click", function () {agregarAlCarrito(producto); });
     })
 };
-renderProds();
 
 
 function renderCarrito() {
@@ -105,6 +104,50 @@ renderCarrito();
 totalizar (); 
 
 
+//función GET de array de productos incorporados con JSON 
+async function GETdatosJSON() {
+    const URLJSON="./array.json";
+    const respuestaArray = await fetch(URLJSON);
+    const tomarDatos = await respuestaArray.json();
+    productosJSON = tomarDatos;
+    console.log(URLJSON);
+    //ya tengo el dolar y los productos, renderizo las cartas
+    renderProds();
+}
+
+
+/*
+function GETdatosJSON() {
+const URLJSON = "./array.json"
+fetch (URLJSON)
+    .then (infosolicitada => infosolicitada.json())
+    .then (productoJSON => console.log (productoJSON))
+
+}
+    GETdatosJSON ();
+*/
+
+
+
+
+
+/*
+function obtenerDolar(){
+    const URLDOLAR="https://api.bluelytics.com.ar/v2/latest";
+    fetch(URLDOLAR)
+        .then( respuesta => respuesta.json())
+        .then( cotizaciones => {
+            const dolarBlue = cotizaciones.blue;
+            console.log(dolarBlue);
+            document.getElementById("fila_prueba").innerHTML+=`
+                <p>Dolar compra: $ ${dolarBlue.value_buy} Dolar venta: $ ${dolarBlue.value_sell}</p>
+            `;
+            dolarCompra=dolarBlue.value_buy;
+            obtenerJSON();
+        })
+}
+*/
+
 //BOTON VACIAR CARRITO
 vaciarCarrito.addEventListener("click", () => {
     carrito.splice(0, carrito.length);
@@ -116,15 +159,35 @@ vaciarCarrito.addEventListener("click", () => {
 
 //BOTON FINALIZAR COMPRA
 finalizarCompra.addEventListener("click", () => {
-    carrito = [];
+    if (carrito.length === 0) {Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Tu carrito está vacío!',
+        text: 'No olvides seleccionar tu producto para retirar por nuestro local.',
+        showConfirmButton: false,
+        timer: 1000
+    });} else {carrito = [];
     document.getElementById("tablabody").innerHTML = "";
-    
-
+    totalizar (); 
     Toastify({
         text: "Compra Finalizada!" + "\n" + "A la brevedad recibirás un Email con el detalle.",
         duration: 3000,
         style: { background: "black", },
     }).showToast();
-});
+}});
 
 
+/*
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'b9777b88b3msh888db381c5bafc4p14462ejsn4e7a92d041a5',
+		'X-RapidAPI-Host': 'billboard2.p.rapidapi.com'
+	}
+};
+
+fetch('https://billboard2.p.rapidapi.com/billboard_global_200?date=2020-09-19', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+*/

@@ -1,4 +1,4 @@
-const productos = [
+/*const productos = [
     {
         imagen: "./img/pan1.jpg",
         nombre: "Molde Multicereal",
@@ -140,3 +140,4 @@ const productos = [
     cantidad: 1
     },
 ];
+*/
